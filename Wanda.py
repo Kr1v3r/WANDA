@@ -9,6 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from io import BytesIO
 from io import StringIO
 import wikipedia
+import smtplib
 import datetime
 num = 1
 
@@ -70,6 +71,26 @@ def search_web(input):
             indx = input.lower().split().index('google')
             query = input.split()[indx + 1:]
             driver.get("https://www.google.com/search?q=" + '+'.join(query))
+        elif 'email' in query:
+            assistant_speaks('Who is the recipient ?')
+            recipient = get_audio()
+
+            if 'me' in recipient:
+                try:
+                    assistant_speaks('What should I say? ')
+                    content = get_audio()
+        
+                    server = smtplib.SMTP('smtp.gmail.com', 587)
+                    server.ehlo()
+                    server.starttls()
+                    server.login("Your_Username", 'Your_Password')
+                    server.sendmail('Your_Username', "Recipient_Username", content)
+                    server.close()
+                    assistant_speaks('Email sent!')
+
+                except:
+                    assistant_speaks('Sorry Sir! I am unable to send your message at this moment!')
+            
         else:
             driver.get("https://www.google.com/search?q=" + '+'.join(input.split()))
         return
