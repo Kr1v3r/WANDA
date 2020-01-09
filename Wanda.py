@@ -145,11 +145,11 @@ def process_text(input):
             assistant_speaks(speak)
             return
         elif "who made you" in input or "who is your father" in input :
-            speak="Oh i was created simply as a wikipedia bot by adhwaith. which then extended to a personal assistant"
+            speak="Oh i was created simply as a wikipedia bot. which then extended to a personal assistant"
             assistant_speaks(speak)
             return
         elif "crazy" in input:
-            speak = """i am crazy i am created by adhwaith"""
+            speak = """Am I ?"""
             assistant_speaks(speak)
             return
         elif "time" in input :
