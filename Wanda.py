@@ -1,20 +1,20 @@
-import speech_recognition as sr  
-import playsound 
-import random   
-from gtts import gTTS   
-import os   
-import wolframalpha 
-from selenium import webdriver  
-from selenium.webdriver.common.keys import Keys
-from io import BytesIO
+import speech_recognition as sr  #for voice recogonition
+import playsound #to get the audio
+import random   #to make random choices
+from gtts import gTTS  #google text to speech package 
+import os  #to manage the files 
+import wolframalpha #a computational knowledge engine
+import webbrowser #to manage browser
+from io import BytesIO #to manage file like input output operations
 from io import StringIO
-import wikipedia
-import smtplib
-import datetime
+import wikipedia #to Get Wikipeda information
+import smtplib #To sent email
+import datetime #for date and time
+import sys #to manipulate the different parts of the python environment
 num = 1
 
 
-def assistant_speaks(output):
+def assistant_speaks(output): #output audio and text 
     global num
     num +=1
     print("Wanda : ", output)
@@ -23,9 +23,7 @@ def assistant_speaks(output):
     toSpeak.save(file)
     playsound.playsound(file, True)
     os.remove(file)
-
-
-def get_audio():
+def get_audio(): #to get input audio and convert it into text 
     r = sr.Recognizer()
     audio = ''
     with sr.Microphone() as source:
@@ -52,53 +50,37 @@ def greetMe():
         assistant_speaks('Good Evening!')
 
 
-def search_web(input):
-    driver = webdriver.Firefox()
-    driver.implicitly_wait(1)
-    driver.maximize_window()
-    if 'youtube' in input.lower():
-        assistant_speaks("Opening in youtube")
-        indx = input.lower().split().index('youtube')
-        query = input.split()[indx+1:]
-        driver.get("http://www.youtube.com/results?search_query=" + '+'.join(query))
-        return
-    else:
-        if 'google' in input:
-            indx = input.lower().split().index('google')
-            query = input.split()[indx + 1:]
-            driver.get("https://www.google.com/search?q=" + '+'.join(query))
-        elif 'search' in input:
-            indx = input.lower().split().index('google')
-            query = input.split()[indx + 1:]
-            driver.get("https://www.google.com/search?q=" + '+'.join(query))
-        elif 'email' in query:
-            assistant_speaks('Who is the recipient ?')
-            recipient = get_audio()
+def send_mail(input):   #funtion to send mail
+    if 'email' in input :
+        assistant_speaks('Who is the recipient ?')
+        recipient = get_audio()
 
-            if 'me' in recipient:
-                try:
-                    assistant_speaks('What should I say? ')
-                    content = get_audio()
+        if 'me' in recipient:
+            try:
+                assistant_speaks('What should I say? ')
+                content = get_audio()
         
-                    server = smtplib.SMTP('smtp.gmail.com', 587)
-                    server.ehlo()
-                    server.starttls()
-                    server.login("Your_Username", 'Your_Password')
-                    server.sendmail('Your_Username', "Recipient_Username", content)
-                    server.close()
-                    assistant_speaks('Email sent!')
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.ehlo()
+                server.starttls()
+                server.login("Your_Username", 'Your_Password')
+                server.sendmail('Your_Username', "Recipient_Username", content)
+                server.close()
+                assistant_speaks('Email sent!')
 
-                except:
-                    assistant_speaks('Sorry Sir! I am unable to send your message at this moment!')
+            except:
+                assistant_speaks('Sorry Sir! I am unable to send your message at this moment!')
             
         else:
-            driver.get("https://www.google.com/search?q=" + '+'.join(input.split()))
+            webbrowser.open('www.google.com')
         return
+def search_web(input): #to open google for search
+    webbrowser.open('www.google.com')
+    return
 
-
-def open_application(input):
+def open_application(input): #open applications and browser
     if "chrome" in input:
-        assistant_speaks("Google Chrome")
+        assistant_speaks("Chrome")
         os.startfile('C:\Program Files (x86)\Google\Chrome\Application\chrome.exe')
         return
     elif "firefox" in input or "mozilla" in input:
@@ -119,20 +101,25 @@ def open_application(input):
     elif "Outlook" in input:
         assistant_speaks("Opening Outlook")
         os.startfile('C:\Program Files (x86)\Microsoft Office\Office15\OUTLOOK.exe')
-        
-    elif "My computer" or "File" in input:
-        assistant_speaks("Opening File Explorer")
-        os.starfile('')
+    elif 'youtube' in input:
+        assistant_speaks('okay') 
+        webbrowser.open('www.youtube.com')
+    elif 'google' in input :
+        assistant_speaks('okay')
+        webbrowser.open('www.google.co.in')
+
+    elif 'gmail' in input :
+        assistant_speaks('okay')
+        webbrowser.open('www.gmail.com')
     else:
         assistant_speaks("Application not available")
         return
 
 
-def process_text(input):
+def process_text(input): #function to interact with assistant and also to determine other functions
     try:
         if "who are you" in input:
-            speak = '''Hello, I am Wanda. Your personal Assistant.
-            '''
+            speak = '''Hello, I am Wanda. Your personal Assistant'''
             assistant_speaks(speak)
             return
         elif "I love you " in input:
@@ -140,22 +127,46 @@ def process_text(input):
             assistant_speaks(random.choice(stMsgs))
             speak('How are you ?')
             return
+        elif "what's up" in input or 'how are you' in input:
+            stMsgs = ['Just doing my thing!', 'I am fine!', 'Nice!', 'I am nice and full of energy']
+            assistant_speaks(random.choice(stMsgs))
+            assistant_speaks('How are you ?')
+            return
         elif "fine" in input:
             speak="oh! good to hear that"
             assistant_speaks(speak)
             return
-        elif "who made you" in input or "who is your father" in input :
+        elif "who made you"  in input :
             speak="Oh i was created simply as a wikipedia bot. which then extended to a personal assistant"
             assistant_speaks(speak)
             return
+        elif 'hello' in input or 'hey' in input or 'hi' in input:
+            stMsgs = ['Hello', 'hip hip . hey', 'whats up', 'hi']
+            assistant_speaks(random.choice(stMsgs))
         elif "crazy" in input:
-            speak = """Am I ?"""
+            speak = """Am I ? Okay"""
             assistant_speaks(speak)
+            return
+        elif "joke" in input :
+            stMsgs=["I just got a photo from a speeding camera through the mail. I send it right back - way too expensive and really bad quality","8 pm I get an SMS from my girlfriend : Me or football?! 11pm. I SMS my girlfriend.You ofcourse."]
+            assistant_speaks(random.choice(stMsgs))
+            return
+        elif "thanks" in input or "thank you" in input:
+            stMsgs=["Its okay","just doing my thing","You'r welcome"]
+            assistant_speaks(random.choice(stMsgs))
             return
         elif "time" in input :
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             assistant_speaks(f"the time is {strTime}")
             return
+        elif 'bye' in input:
+            currentH = int(datetime.datetime.now().hour)
+            if currentH >= 18 and currentH !=0:
+                speak('Good Night')
+            else:
+                stMsgs=['Bye , have a good day.','see you soon']
+                speak(random.choice(stMsgs))
+                sys.exit()
         elif "wikipedia" in input :
             results = wikipedia.summary(input.lower(), sentences=2)
             assistant_speaks('Got it.')
@@ -178,6 +189,8 @@ def process_text(input):
         elif 'search' in input or 'play' in input:
             search_web(input.lower())
             return
+        elif 'send mail' in input :
+            send_mail(input.lower())
         else:
             assistant_speaks("I can search the web for you, Do you want to continue?")
             ans = get_audio()
@@ -193,10 +206,9 @@ def process_text(input):
             search_web(input)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": #to run directly 
     greetMe()
     assistant_speaks("What's your name , Boss")
-    name ='Boss'
     name=get_audio()
     assistant_speaks("Hello, " + name + '.')
     assistant_speaks("What can i do for you?")
@@ -205,7 +217,7 @@ if __name__ == "__main__":
         if text == 0:
             continue
         #assistant_speaks(text)
-        if "exit" in str(text) or "bye" in str(text) or "go " in str(text) or "sleep" in str(text) or "good bye" in str(text):
-            assistant_speaks("Ok bye, "+ name+'.')
+        if "exit" in str(text) or "bye" in str(text) or "good bye" in str(text):
+            assistant_speaks("Ok bye, "+ name +'.')
             break
         process_text(text)
