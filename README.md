@@ -19,3 +19,13 @@ Here is the full source Code and the original Code of Wanda
 *Fixed Bugs Removed Selenium Added Webbrowser 
 
 *Added Comments to understand the Functions
+
+# Installation
+
+First of all install the requirements.txt file by using command
+
+pip install -r requirements.txt
+
+or try
+
+pip3 install -r requirements.txt
