@@ -35,3 +35,7 @@ eg:- >pip install -r requirements.txt
 If using latest version of python use python -m before pip install
 
 eg:- >python -m pip install -r requirements.txt
+
+# Run on repl.it
+
+[![Run on Repl.it](https://repl.it/badge/github/A3U-5ER/WANDA)](https://repl.it/github/A3U-5ER/WANDA)
