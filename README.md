@@ -14,5 +14,5 @@ Wanda is a personal virtual Assistant which is made through python to make tasks
 
 Here is the full source Code and the original Code of Wanda
  Fixed Bugs
- Fixed Bugs Removed Selenium Added Webbrowser 
+ &nbsp Fixed Bugs Removed Selenium Added Webbrowser 
  Added Comments to understand the Functions
