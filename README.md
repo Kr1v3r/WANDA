@@ -29,3 +29,9 @@ pip install -r requirements.txt
 or try
 
 pip3 install -r requirements.txt
+
+eg:- >pip install -r requirements.txt
+
+If using latest version of python use python -m before pip install
+
+eg:- >python -m pip install -r requirements.txt
