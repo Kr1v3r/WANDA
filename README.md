@@ -20,7 +20,7 @@ Here is the full source Code and the original Code of Wanda
 
 *Added Comments to understand the Functions
 
-# Installation
+# Module Installation
 
 First of all install the requirements.txt file by using command
 
