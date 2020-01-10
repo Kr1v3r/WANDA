@@ -1,0 +1,7 @@
+speechrecognition
+playsound
+gTTs
+wolframalpha
+webbrowser
+wikipedia
+smtplib
