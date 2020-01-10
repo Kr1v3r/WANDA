@@ -5,8 +5,6 @@ from gtts import gTTS  #google text to speech package
 import os  #to manage the files 
 import wolframalpha #a computational knowledge engine
 import webbrowser #to manage browser
-from io import BytesIO #to manage file like input output operations
-from io import StringIO
 import wikipedia #to Get Wikipeda information
 import smtplib #To sent email
 import datetime #for date and time
@@ -143,6 +141,7 @@ def process_text(input): #function to interact with assistant and also to determ
         elif 'hello' in input or 'hey' in input or 'hi' in input:
             stMsgs = ['Hello', 'hip hip . hey', 'whats up', 'hi']
             assistant_speaks(random.choice(stMsgs))
+            return
         elif "crazy" in input:
             speak = """Am I ? Okay"""
             assistant_speaks(speak)
@@ -166,7 +165,8 @@ def process_text(input): #function to interact with assistant and also to determ
             else:
                 stMsgs=['Bye , have a good day.','see you soon']
                 speak(random.choice(stMsgs))
-                sys.exit()
+                sys.exit()          
+            assistant_speaks('Okay, here is your music! Enjoy!')
         elif "wikipedia" in input :
             results = wikipedia.summary(input.lower(), sentences=2)
             assistant_speaks('Got it.')
