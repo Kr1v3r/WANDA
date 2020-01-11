@@ -1,5 +1,5 @@
 import speech_recognition as sr  #for voice recogonition
-import playsound #to get the audio
+import playsound #to play the audio
 import random   #to make random choices
 from gtts import gTTS  #google text to speech package 
 import os  #to manage the files 
@@ -120,10 +120,9 @@ def process_text(input): #function to interact with assistant and also to determ
             speak = '''Hello, I am Wanda. Your personal Assistant'''
             assistant_speaks(speak)
             return
-        elif "I love you " in input:
-            stMsgs=["Awww thats nice but i dont have feelings","Sorry You are just my brother"]
+        elif "i love you" in input:
+            stMsgs=['that was nice but i dont have feelings','Sorry You are just my brother']
             assistant_speaks(random.choice(stMsgs))
-            speak('How are you ?')
             return
         elif "what's up" in input or 'how are you' in input:
             stMsgs = ['Just doing my thing!', 'I am fine!', 'Nice!', 'I am nice and full of energy']
@@ -165,8 +164,7 @@ def process_text(input): #function to interact with assistant and also to determ
             else:
                 stMsgs=['Bye , have a good day.','see you soon']
                 speak(random.choice(stMsgs))
-                sys.exit()          
-            assistant_speaks('Okay, here is your music! Enjoy!')
+                sys.exit()      
         elif "wikipedia" in input :
             results = wikipedia.summary(input.lower(), sentences=2)
             assistant_speaks('Got it.')
@@ -176,7 +174,6 @@ def process_text(input): #function to interact with assistant and also to determ
         elif "calculate" in input.lower():
             app_id= "E46YXW-T5LG6RT7K7"
             client = wolframalpha.Client(app_id)
-
             indx = input.lower().split().index('calculate')
             query = input.split()[indx + 1:]
             res = client.query(' '.join(query))
@@ -216,8 +213,7 @@ if __name__ == "__main__": #to run directly
         text = get_audio().lower()
         if text == 0:
             continue
-        #assistant_speaks(text)
         if "exit" in str(text) or "bye" in str(text) or "good bye" in str(text):
-            assistant_speaks("Ok bye, "+ name +'.')
+            assistant_speaks("see you soon, "+ name +'.')
             break
         process_text(text)
