@@ -1,11 +1,10 @@
-
 # WANDA
 
 Wanda is a personal virtual Assistant which is made through python to make tasks and works easier.
 
 # Features
 
-*Interations
+*Interactions
 *Calculations
 *Searching
 *Wikipedia
