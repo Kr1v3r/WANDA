@@ -29,12 +29,12 @@ def get_audio(): #to get input audio and convert it into text
         audio = r.listen(source, phrase_time_limit=5)
     print("Stop.")
     try:
-        text = r.recognize_google(audio,language='en-US')
+        text = r.recognize_google(audio,language='en-US').lower()
         print("You : ", text)
         return text
     except:
         assistant_speaks("Could not understand your audio, PLease try again!")
-        return 0
+        return 
 
 def greetMe():
     currentH = int(datetime.datetime.now().hour)
@@ -168,7 +168,6 @@ def process_text(input): #function to interact with assistant and also to determ
         elif "wikipedia" in input :
             results = wikipedia.summary(input.lower(), sentences=2)
             assistant_speaks('Got it.')
-            assistant_speaks('According to wikipedia : ')
             assistant_speaks(results)
             return  
         elif "calculate" in input.lower():
@@ -176,7 +175,7 @@ def process_text(input): #function to interact with assistant and also to determ
             client = wolframalpha.Client(app_id)
             indx = input.lower().split().index('calculate')
             query = input.split()[indx + 1:]
-            res = client.query(' '.join(query))
+            res= client.query(' '.join(query))
             answer = next(res.results).text
             assistant_speaks("The answer is " + answer)
             return
@@ -220,7 +219,7 @@ if __name__ == "__main__": #to run directly
     assistant_speaks("Hello, " + name + '.')
     assistant_speaks("What can i do for you?")
     while(1):
-        text = get_audio().lower()
+        text = get_audio()
         if text == 0:
             continue
         if "exit" in str(text) or "bye" in str(text) or "good bye" in str(text):
