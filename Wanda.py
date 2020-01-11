@@ -188,12 +188,22 @@ def process_text(input): #function to interact with assistant and also to determ
             return
         elif 'send mail' in input :
             send_mail(input.lower())
-        else:
-            assistant_speaks("I can search the web for you, Do you want to continue?")
-            ans = get_audio()
-            if 'yes' in str(ans) or 'yeah' in str(ans):
-                search_web(input)
-            else:
+        else :
+            query = input
+            assistant_speaks('Let me see')
+            try:
+                try:
+                    client = wolframalpha.Client('XVLP9Q-7YTYAQ3WHA')
+                    res = client.query(query)
+                    results = next(res.results).text
+                    assistant_speaks('Got it.')
+                    assistant_speaks(results)
+                except:
+                    assistant_speaks("I can search the web for you, Do you want to continue?")
+                    ans = get_audio()
+                    if 'yes' in str(ans) or 'yeah' in str(ans):
+                        search_web(input)
+            except :
                 return
     except Exception as e:
         print(e)
